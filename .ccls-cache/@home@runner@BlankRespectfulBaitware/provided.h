@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct category_tag {
   char *name;
@@ -28,18 +29,25 @@ const char *chooseWord(char *category, catarray_t *cats) {
   removeChar(word, word[0]);
   // printf("%s - %s \n", category, word);
 
-  printf("%i \n", cats->n);
-  printf("%s \n", cats->arr[0].name);
+  char *randomWord;
+
+  // printf("%i \n", cats->n);
+  // printf("%s \n", cats->arr[0].name);
 
   for (int i = 0; i < cats->n; i++) {
 
-    // if (strcmp(cats->arr[i].name, word) == 0) {
-    //   printf("%s category found \n", word);
-    // }
-    // for (int j = 0; j < cats.arr[i].n_words; j++)
+    if (strcmp(cats->arr[i].name, word) == 0) {
+      srand(time(0));
+      int randomNumber = (rand() % (cats->arr[i].n_words));
+
+      // printf("%i - %s category found \n", randomNumber, word);
+      randomWord = strdup(cats->arr[i].words[randomNumber]);
+
+      // printf("%s \n", randomWord);
+    }
   }
 
-  return "cat";
+  return randomWord;
 }
 
 void printWords(catarray_t *cats);

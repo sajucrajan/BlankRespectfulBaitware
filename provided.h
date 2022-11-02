@@ -25,26 +25,25 @@ typedef struct catarray_tag catarray_t;
 const char *chooseWord(char *category, catarray_t *cats) {
   char *word = strdup(category);
 
-  // printf("%s - ", category);
+  printf("%s - ", category);
   removeChar(word, word[0]);
-  // printf("%s - %s \n", category, word);
+  printf("%s - %s \n", category, word);
 
-  char* randomWord;
+  char *randomWord;
 
-  // printf("%i \n", cats->n);
-  // printf("%s \n", cats->arr[0].name);
+  printf("%i \n", cats->n);
+  printf("%s \n", cats->arr[0].name);
 
   for (int i = 0; i < cats->n; i++) {
 
     if (strcmp(cats->arr[i].name, word) == 0) {
       srand(time(0));
       int randomNumber = (rand() % (cats->arr[i].n_words));
-      
+
       // printf("%i - %s category found \n", randomNumber, word);
       randomWord = strdup(cats->arr[i].words[randomNumber]);
 
       // printf("%s \n", randomWord);
-
     }
   }
 

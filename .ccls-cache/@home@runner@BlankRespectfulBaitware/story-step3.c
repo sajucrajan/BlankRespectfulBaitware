@@ -23,7 +23,6 @@ int main(int argc, char *argv[]) {
 
   printf("\n\n **************** %s ******************* \n\n", wordsFileName);
 
-  
   for (int i = 0; i < catArray.n; i++) {
     printf("%d ... %s \n", i, catArray.arr[i].name);
     for (int j = 0; j < catArray.arr[i].n_words; j++)
@@ -43,10 +42,17 @@ int main(int argc, char *argv[]) {
 
   printf("\n ----------- %s ----------- \n\n", storyFileName);
 
+  char *catWords[200];
+  int catWordCounts = 0;
+
   while ((read = getline(&line, &len, fp)) != -1) {
+
+    getCategories(wordsFileName);
 
     char *token = strtok(line, " ");
     char *word;
+
+    char *categoryName;
 
     // loop through the string to extract all other tokens
     while (token != NULL) {
@@ -66,6 +72,7 @@ int main(int argc, char *argv[]) {
         printf("The input story have incorrect word %s \n", token);
         printf("Exiting program \n");
         exit(0);
+
       } else if (position_first != position_last) {
         // printf("Inside else If %s \n", token);
         // Call chooseWords functions
@@ -76,13 +83,34 @@ int main(int argc, char *argv[]) {
                 position_last - position_first + 1);
         oldW[position_last - position_first + 1] = '\0';
 
-        
-        
-        // const char *newW = chooseWord(oldW, &catArray);
+        // printf("Token %s \n", token);
+        // printf("Old Word %s \n", oldW);
 
-        const char *newW = "cat";
+        categoryName = strdup(oldW);
+        removeChar(categoryName, categoryName[0]);
 
-        
+        // printf("%s - %s \n", oldW, categoryName);
+
+        int categoryNumber = atoi(categoryName);
+        // printf("Converted Number %i \n", categoryNumber);
+
+        char *temp = (char *)malloc(20 * sizeof(char));
+        sprintf(temp, "%i", categoryNumber);
+
+        // printf("Temp %s \n", temp);
+
+        // printf("%s - %s - %i - %s", oldW, categoryName, categoryNumber,
+        // temp);
+
+        const char *newW;
+
+        if (strlen(categoryName) == strlen(temp)) {
+          int a = 0;
+        } else
+          newW = chooseWord(oldW, &catArray);
+
+        // printf("New Word %s \n", newW);
+
         // printf("%s %s - %s | %s \n ------------------ \n", token, oldW, newW,
         //        replaceWord(token, oldW, newW));
         word = replaceWord(token, oldW, newW);

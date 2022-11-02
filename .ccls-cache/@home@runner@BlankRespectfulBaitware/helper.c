@@ -19,5 +19,4 @@ void removeChar(char * str, char charToRemmove){
           i--;
       }
   }
-    
 }

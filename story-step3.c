@@ -42,12 +42,17 @@ int main(int argc, char *argv[]) {
 
   printf("\n ----------- %s ----------- \n\n", storyFileName);
 
+  char *catWords[200];
+  int catWordCounts = 0;
+
   while ((read = getline(&line, &len, fp)) != -1) {
 
     getCategories(wordsFileName);
 
     char *token = strtok(line, " ");
     char *word;
+
+    char *categoryName;
 
     // loop through the string to extract all other tokens
     while (token != NULL) {
@@ -67,6 +72,7 @@ int main(int argc, char *argv[]) {
         printf("The input story have incorrect word %s \n", token);
         printf("Exiting program \n");
         exit(0);
+
       } else if (position_first != position_last) {
         // printf("Inside else If %s \n", token);
         // Call chooseWords functions
@@ -76,8 +82,35 @@ int main(int argc, char *argv[]) {
         strncpy(oldW, token + position_first,
                 position_last - position_first + 1);
         oldW[position_last - position_first + 1] = '\0';
+
+        // printf("Token %s \n", token);
+        // printf("Old Word %s \n", oldW);
+
+        categoryName = strdup(oldW);
+        removeChar(categoryName, categoryName[0]);
+
+        // printf("%s - %s \n", oldW, categoryName);
+
+        int categoryNumber = atoi(categoryName);
+        // printf("Converted Number %i \n", categoryNumber);
+
+        char *temp = (char *)malloc(20 * sizeof(char));
+        sprintf(temp, "%i", categoryNumber);
+
+        // printf("Temp %s \n", temp);
+
+        // printf("%s - %s - %i - %s", oldW, categoryName, categoryNumber,
+        // temp);
+
+        const char *newW;
         
-        const char *newW = chooseWord(oldW, &catArray);
+        if (strlen(categoryName) == strlen(temp)) {
+          int a = 0;
+        }
+        else 
+          newW = chooseWord(oldW, &catArray);
+
+        // printf("New Word %s \n", newW);
 
         // printf("%s %s - %s | %s \n ------------------ \n", token, oldW, newW,
         //        replaceWord(token, oldW, newW));
@@ -93,10 +126,10 @@ int main(int argc, char *argv[]) {
 
       token = strtok(NULL, " ");
 
-      printf("%s", word);
-      if (token != NULL) {
-        printf(" ");
-      }
+      // printf("%s", word);
+      // if (token != NULL) {
+      //   printf(" ");
+      // }
     }
   }
 
