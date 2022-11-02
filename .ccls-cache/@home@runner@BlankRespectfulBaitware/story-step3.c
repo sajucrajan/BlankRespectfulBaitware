@@ -21,12 +21,16 @@ int main(int argc, char *argv[]) {
 
   catarray_t catArray = getCategories(wordsFileName);
 
-  // for (int i = 0; i < catArray.n; i++) {
-  //   printf("%d ... %s \n", i, catArray.arr[i].name);
-  //   for (int j = 0; j < catArray.arr[i].n_words; j++)
-  //     printf("  %d .. %s \n", j, catArray.arr[i].words[j]);
-  // }
+  printf("\n\n **************** %s ******************* \n\n", wordsFileName);
+
   
+  for (int i = 0; i < catArray.n; i++) {
+    printf("%d ... %s \n", i, catArray.arr[i].name);
+    for (int j = 0; j < catArray.arr[i].n_words; j++)
+      printf("  %d .. %s \n", j, catArray.arr[i].words[j]);
+  }
+
+  printf("\n **************** %s ******************* \n", "-");
 
   FILE *fp;
   char *line = NULL;
@@ -36,6 +40,8 @@ int main(int argc, char *argv[]) {
   fp = fopen(storyFileName, "r");
   if (fp == NULL)
     exit(EXIT_FAILURE);
+
+  printf("\n ----------- %s ----------- \n\n", storyFileName);
 
   while ((read = getline(&line, &len, fp)) != -1) {
 
@@ -68,9 +74,15 @@ int main(int argc, char *argv[]) {
 
         strncpy(oldW, token + position_first,
                 position_last - position_first + 1);
+        oldW[position_last - position_first + 1] = '\0';
 
-        char *newW = chooseWord(oldW, NULL);
+        
+        
+        // const char *newW = chooseWord(oldW, &catArray);
 
+        const char *newW = "cat";
+
+        
         // printf("%s %s - %s | %s \n ------------------ \n", token, oldW, newW,
         //        replaceWord(token, oldW, newW));
         word = replaceWord(token, oldW, newW);
@@ -85,12 +97,14 @@ int main(int argc, char *argv[]) {
 
       token = strtok(NULL, " ");
 
-      printf("%s", word);
-      if (token != NULL) {
-        printf(" ");
-      }
+      // printf("%s", word);
+      // if (token != NULL) {
+      //   printf(" ");
+      // }
     }
   }
+
+  printf("\n\n ----------- %s ----------- \n\n", "*");
 
   fclose(fp);
   if (line)

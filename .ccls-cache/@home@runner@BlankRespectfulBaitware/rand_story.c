@@ -109,21 +109,21 @@ catarray_t getCategories(char *wordsFileName) {
     } else {
       cats[bPos].words[cats[bPos].n_words] = strdup(buf2);
       cats[bPos].n_words += 1;
-      int a = 0;
     }
   }
 
   catArray.arr = cats;
   catArray.n = cat_cnt;
 
-  // // for (int i = 0; i < cat_cnt; i++) {
-  // //   printf("%d ... %s\n", i, cats[i].name);
-  // //   for (int j = 0; j < cats[i].n_words; j++)
-  // //     printf("  %d .. %s\n", j, cats[i].words[j]);
-  // // }
+  // for (int i = 0; i < cat_cnt; i++) {
+  //   printf("%d ... %s\n", i, cats[i].name);
+  //   for (int j = 0; j < cats[i].n_words; j++)
+  //     printf("  %d .. %s\n", j, cats[i].words[j]);
+  // }
 
   fclose(fpi);
   if (linei)
     free(linei);
+
   return catArray;
 }

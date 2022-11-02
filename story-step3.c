@@ -40,10 +40,11 @@ int main(int argc, char *argv[]) {
   if (fp == NULL)
     exit(EXIT_FAILURE);
 
+  printf("\n ----------- %s ----------- \n\n", storyFileName);
 
-  printf("\n\n ----------- %s ----------- \n\n", storyFileName);
-  
   while ((read = getline(&line, &len, fp)) != -1) {
+
+    getCategories(wordsFileName);
 
     char *token = strtok(line, " ");
     char *word;
@@ -75,8 +76,8 @@ int main(int argc, char *argv[]) {
         strncpy(oldW, token + position_first,
                 position_last - position_first + 1);
         oldW[position_last - position_first + 1] = '\0';
-
-        char *newW = chooseWord(oldW, NULL);
+        
+        const char *newW = chooseWord(oldW, &catArray);
 
         // printf("%s %s - %s | %s \n ------------------ \n", token, oldW, newW,
         //        replaceWord(token, oldW, newW));
@@ -100,7 +101,7 @@ int main(int argc, char *argv[]) {
   }
 
   printf("\n\n ----------- %s ----------- \n\n", "*");
-  
+
   fclose(fp);
   if (line)
     free(line);
