@@ -19,17 +19,20 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   }
 
+  printf("\nStory File Name:  %s\n", storyFileName);
+  printf("-----------------------------------------\n", storyFileName);
+  
   catarray_t catArray = getCategories(wordsFileName);
 
-  printf("\n\n **************** %s ******************* \n\n", wordsFileName);
+  // printf("\n\n **************** %s ******************* \n\n", wordsFileName);
 
-  for (int i = 0; i < catArray.n; i++) {
-    printf("%d ... %s \n", i, catArray.arr[i].name);
-    for (int j = 0; j < catArray.arr[i].n_words; j++)
-      printf("  %d .. %s \n", j, catArray.arr[i].words[j]);
-  }
+  // for (int i = 0; i < catArray.n; i++) {
+  //   printf("%d ... %s \n", i, catArray.arr[i].name);
+  //   for (int j = 0; j < catArray.arr[i].n_words; j++)
+  //     printf("  %d .. %s \n", j, catArray.arr[i].words[j]);
+  // }
 
-  printf("\n **************** %s ******************* \n", "-");
+  // printf("\n **************** %s ******************* \n", "-");
 
   FILE *fp;
   char *line = NULL;
@@ -40,14 +43,12 @@ int main(int argc, char *argv[]) {
   if (fp == NULL)
     exit(EXIT_FAILURE);
 
-  printf("\n ----------- %s ----------- \n\n", storyFileName);
+  // printf("\n ----------- %s ----------- \n\n", storyFileName);
 
   char *catWords[200];
   int catWordCounts = 0;
 
   while ((read = getline(&line, &len, fp)) != -1) {
-
-    getCategories(wordsFileName);
 
     char *token = strtok(line, " ");
     char *word;
@@ -102,12 +103,20 @@ int main(int argc, char *argv[]) {
         // printf("%s - %s - %i - %s", oldW, categoryName, categoryNumber,
         // temp);
 
-        const char *newW;
+        getCategories(wordsFileName);
 
+        const char *newW;
+        
         if (strlen(categoryName) == strlen(temp)) {
-          int a = 0;
-        } else
+          // printf("%s - %i. %s \n", oldW, categoryNumber, catWords[categoryNumber-1]);
+          newW = catWords[categoryNumber-1];
+        }
+        else {
           newW = chooseWord(oldW, &catArray);
+          catWords[catWordCounts] = strdup(newW);
+          catWordCounts++;
+        }
+          
 
         // printf("New Word %s \n", newW);
 
@@ -125,14 +134,24 @@ int main(int argc, char *argv[]) {
 
       token = strtok(NULL, " ");
 
-      // printf("%s", word);
-      // if (token != NULL) {
-      //   printf(" ");
-      // }
+      printf("%s", word);
+      if (token != NULL) {
+        printf(" ");
+      }
     }
   }
 
-  printf("\n\n ----------- %s ----------- \n\n", "*");
+  // printf("\n\n ----------- %s ----------- \n\n", "*");
+
+  // printf("\n\n ----------- Test ----------- \n\n", "*");
+
+  // for(int i = 0; i < catWordCounts; i++) {
+  //   printf("%i. %s \n", i, catWords[i]);
+  // }
+  
+  // printf("\n\n ----------- Test ----------- \n\n", "*");
+
+  printf("\n\n");
 
   fclose(fp);
   if (line)

@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
   printf("\nStory File Name:  %s\n", storyFileName);
   printf("-----------------------------------------\n", storyFileName);
-  
+
   catarray_t catArray = getCategories(wordsFileName);
 
   // printf("\n\n **************** %s ******************* \n\n", wordsFileName);
@@ -106,17 +106,16 @@ int main(int argc, char *argv[]) {
         getCategories(wordsFileName);
 
         const char *newW;
-        
+
         if (strlen(categoryName) == strlen(temp)) {
-          // printf("%s - %i. %s \n", oldW, categoryNumber, catWords[categoryNumber-1]);
-          newW = catWords[categoryNumber-1];
-        }
-        else {
+          // printf("%s - %i. %s \n", oldW, categoryNumber,
+          // catWords[categoryNumber-1]);
+          newW = catWords[categoryNumber - 1];
+        } else {
           newW = chooseWord(oldW, &catArray);
           catWords[catWordCounts] = strdup(newW);
           catWordCounts++;
         }
-          
 
         // printf("New Word %s \n", newW);
 
@@ -148,7 +147,7 @@ int main(int argc, char *argv[]) {
   // for(int i = 0; i < catWordCounts; i++) {
   //   printf("%i. %s \n", i, catWords[i]);
   // }
-  
+
   // printf("\n\n ----------- Test ----------- \n\n", "*");
 
   printf("\n\n");

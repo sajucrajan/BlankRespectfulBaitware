@@ -29,6 +29,8 @@ const char *chooseWord(char *category, catarray_t *cats) {
   removeChar(word, word[0]);
   // printf("%s - %s \n", category, word);
 
+  // printf("");
+
   char *randomWord;
 
   // printf("%i \n", cats->n);
@@ -36,8 +38,11 @@ const char *chooseWord(char *category, catarray_t *cats) {
 
   for (int i = 0; i < cats->n; i++) {
 
+    // printf("%s - %s \n", cats->arr[i].name, word);
+    
     if (strcmp(cats->arr[i].name, word) == 0) {
       srand(time(0));
+
       int randomNumber = (rand() % (cats->arr[i].n_words));
 
       // printf("%i - %s category found \n", randomNumber, word);
