@@ -72,9 +72,11 @@ int main(int argc, char *argv[]) {
   for (l = 0; l <= tot; ++l) {
     printf(" %s \n", lines[l]);
   }
+  // printf(" end of file \n");
 
   catarray_t catArray = getCategoriesFromArray(lines, tot);
 
+  // printf(" getCategoriesFromArray end \n");
   FILE *fp;
   char *line = NULL;
   size_t len = 0;
@@ -84,13 +86,19 @@ int main(int argc, char *argv[]) {
   if (fp == NULL)
     exit(EXIT_FAILURE);
 
+  // printf("\n storyFileName init end \n");
+
   char *catWords[200];
   int catWordCounts = 0;
 
   /* Define a temporary variable */
   char outputline[255];
 
+  // printf(" \n read storyFileName read begin \n");
   while ((read = getline(&line, &len, fp)) != -1) {
+
+    // printf("\n read line %s \n", line);
+
     char *token = strtok(line, " ");
     char *word;
 
@@ -99,6 +107,7 @@ int main(int argc, char *argv[]) {
     // loop through the string to extract all other tokens
     while (token != NULL) {
 
+      // printf("\n token %s \n", token);
       char *position_ptr_first = strchr(token, '_');
       char *position_ptr_last = strrchr(token, '_');
 
@@ -107,6 +116,8 @@ int main(int argc, char *argv[]) {
       int position_last =
           (position_ptr_last == NULL ? -1 : position_ptr_last - token);
 
+      // printf("\n position_first %d \n", position_first);
+      // printf("\n position_last %d \n", position_last);
       int count = 0;
       const char *newW;
 
@@ -124,18 +135,30 @@ int main(int argc, char *argv[]) {
         strncpy(oldW, token + position_first,
                 position_last - position_first + 1);
 
+        // printf("\n old word %s \n", oldW);
+
         oldW[position_last - position_first + 1] = '\0';
+
+        // printf("Token %s \n", token);
+        // printf("Old Word %s \n", oldW);
 
         categoryName = strdup(oldW);
         removeChar(categoryName, categoryName[0]);
+        // printf("%s - %s \n", oldW, categoryName);
 
         int categoryNumber = atoi(categoryName);
+        // printf("Converted Number %i \n", categoryNumber);
 
         char *temp = (char *)malloc(20 * sizeof(char));
         sprintf(temp, "%i", categoryNumber);
 
+        // printf("Temp %s \n", temp);
+        // printf("print all %s - %s - %i - %s dadada\n", oldW, categoryName, categoryNumber, temp);
+
         getCategoriesFromArray(lines, tot);
 
+        // printf("\n rebuild from array. \n");
+          
         if (strlen(categoryName) == strlen(temp)) {
           newW = catWords[categoryNumber - 1];
         } else {
@@ -143,6 +166,7 @@ int main(int argc, char *argv[]) {
           catWords[catWordCounts] = strdup(newW);
           catWordCounts++;
         }
+        // printf("\n new word is %s. \n", newW);
 
         if (!isWordReusable) {
 
@@ -175,8 +199,12 @@ int main(int argc, char *argv[]) {
           // }
         }
 
+       // printf("\n get replace word is \n");
+
+
         word = replaceWord(token, oldW, newW);
 
+        // printf("\n get replace word is %s \n", word);
       } else {
         word = token;
       }

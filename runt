@@ -1,0 +1,4 @@
+rm -f test
+make test
+./test -n words.txt story.txt 
+./test -n words.txt story2.txt

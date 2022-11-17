@@ -127,3 +127,75 @@ catarray_t getCategories(char *wordsFileName) {
 
   return catArray;
 }
+
+catarray_t getCategoriesFromArray(char **ptr, int count) {
+
+  FILE *fpi;
+  char *linei = NULL;
+  size_t len = 0;
+  ssize_t read;
+
+  char buf1[20], buf2[20], buffer[255];
+  category_t cats[5];
+
+  catarray_t catArray;
+
+  memset(buf1, '\0', 20);
+  memset(buf2, '\0', 20);
+  memset(buffer, '\0', 255);
+
+  for (int i = 0; i < 5; i++) {
+    cats[i].n_words = 0;
+  }
+  int arr_ctr = 0;
+
+  int cat_cnt = 0;
+  for (int i = 0; i <= count; i++) {
+    int bFound = 0;
+    int bPos = 0;
+    strcpy(buffer, ptr[i]);
+
+    SplitLine(buffer, buf1, buf2, ':');
+
+    for (int i = 0; i < cat_cnt; i++) {
+      if (strncmp(cats[i].name, buf1, strlen(buf1)) == 0) {
+        bFound = 1;
+        bPos = i;
+        break;
+      }
+    }
+    if (!bFound) {
+      cats[cat_cnt].name = strdup(buf1);
+      cats[cat_cnt].words = (char **)malloc(50 * sizeof(char));
+      cats[cat_cnt].words[cats[cat_cnt].n_words] = strdup(buf2);
+      cats[cat_cnt].n_words += 1;
+      cat_cnt += 1;
+    } else {
+      cats[bPos].words[cats[bPos].n_words] = strdup(buf2);
+      cats[bPos].n_words += 1;
+    }
+  }
+
+  catArray.arr = cats;
+  catArray.n = cat_cnt;
+
+  // for (int i = 0; i < cat_cnt; i++) {
+  //   printf("%d ... %s\n", i, cats[i].name);
+  //   for (int j = 0; j < cats[i].n_words; j++)
+  //     printf("  %d .. %s\n", j, cats[i].words[j]);
+  // }
+
+  if (linei)
+    free(linei);
+
+  return catArray;
+}
+
+void Strfun(char **ptr, int count) {
+  printf("inside str fun count %d \n", count);
+  int i = 0, c = 0;
+
+  for (i = 0; i < count; i++) {
+    printf("String [%d] : %s \n", i, ptr[i]);
+  }
+}

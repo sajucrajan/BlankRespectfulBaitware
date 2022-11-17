@@ -39,7 +39,7 @@ const char *chooseWord(char *category, catarray_t *cats) {
   for (int i = 0; i < cats->n; i++) {
 
     // printf("%s - %s \n", cats->arr[i].name, word);
-    
+
     if (strcmp(cats->arr[i].name, word) == 0) {
       srand(time(0));
 
